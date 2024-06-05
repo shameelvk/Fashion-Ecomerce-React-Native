@@ -26,7 +26,7 @@ function SettingsScreen() {
 
 const Home_Stack=()=>{
   return(
-  <Stack.Navigator initialRouteName='PRODUCTDETAILS' screenOptions={{headerShown:false}}>
+  <Stack.Navigator  screenOptions={{headerShown:false}}>
     <Stack.Screen name="HOME" component={HomeScreen} />
     <Stack.Screen name="PRODUCTDETAILS" component={ProductDetails} />
   

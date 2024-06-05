@@ -33,8 +33,8 @@ const ProductDetails = () => {
                 <Text style={styles.productTitle}>Size</Text>
                 <View style={styles.sizeList}>
                     {
-                        Sizes.map((size) => {
-                            return (<TouchableOpacity onPress={() => setSelectedSize(size)} style={styles.size}><Text style={[styles.sizeText, selectedSize == size && { color: "#E55B5B" }]}>{size}</Text></TouchableOpacity>
+                        Sizes.map((size,index) => {
+                            return (<TouchableOpacity key={index} onPress={() => setSelectedSize(size)} style={styles.size}><Text style={[styles.sizeText, selectedSize == size && { color: "#E55B5B" }]}>{size}</Text></TouchableOpacity>
                             )
                         })
                     }
@@ -44,8 +44,8 @@ const ProductDetails = () => {
                 <Text style={styles.productTitle}>Colors</Text>
 
                 <View style={styles.colorGroup}>
-                    {colorsArray.map((color) => {
-                        return (<TouchableOpacity onPress={() => setSelectedColor(color)} style={[styles.colorBorder, selectedColor == color && { borderColor: color, borderWidth: 2 }]}>
+                    {colorsArray.map((color,index) => {
+                        return (<TouchableOpacity key={index} onPress={() => setSelectedColor(color)} style={[styles.colorBorder, selectedColor == color && { borderColor: color, borderWidth: 2 }]}>
                             <View style={[styles.colorCircle, { backgroundColor: color }]} />
                         </TouchableOpacity>)
                     })}
