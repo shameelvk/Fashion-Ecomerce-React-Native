@@ -8,7 +8,7 @@ const ProductCard = ({item,handleLike}) => {
    const route= useNavigation()
     
     return (
-        <TouchableOpacity onPress={()=>route.navigate('PRODUCTDETAILS')} style={styles.cardContainer}>
+        <TouchableOpacity onPress={()=>route.navigate('PRODUCTDETAILS',{item})} style={styles.cardContainer}>
             <Image source={{uri:item.image}} style={styles.productImg} />
             <View style={styles.content}>
                 <Text style={styles.productTitle}>{item.title}</Text>

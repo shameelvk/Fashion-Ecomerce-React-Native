@@ -1,10 +1,18 @@
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient';
 import Header from '../components/Header';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { cartContext } from '../contexts/CartContext';
+
 
 
 const ProductDetails = () => {
+    const {addToCart} = useContext(cartContext)
+    const navigation=useNavigation()
+    const route = useRoute();
+    const product = route.params.item;
+    
     const Sizes = ['S', 'M', 'L', 'XL'];
     const [selectedSize, setSelectedSize] = useState(null)
     const [selectedColor, setSelectedColor] = useState(null)
@@ -16,18 +24,29 @@ const ProductDetails = () => {
         "#1D752B",
         "#000000",
     ];
+    const handleAddToCart=()=>{
+
+        product.color=selectedColor;
+        product.size=selectedSize;
+        addToCart(product)
+        navigation.navigate('Cart')
+
+        
+    }
 
 
-    imgUrl = "https://s3-alpha-sig.figma.com/img/c619/1d1f/2ef87431bb9714190324b36b9e18bb8e?Expires=1718582400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=dyhs8tG-I5i4~hX8G39ccfSiOz7-A5J6cWlliGo-kEJ1~4-u4GdUUt9QuMWIVwtXCgA9kc1mLDkDuhh~d3~Kvh4GowkQa0YUBE2QD9E9r6hIhTBXCpMm6WIbSdqpEqp87JwvXErLUWmxc3lUEPQlGvQJodc7pURYG6N-J5UXvNqZz16mTFXcc9WjyUOu6mcAdMJ66qDFvUtLkC6FFjo1uCcL-~pb8SqyiU-3Ognb1Z8A6g3u9KHDSFGQTxSTsmGaXPKn~voL1TWK7kYCaoTS7RptC3aEf6LbOajIp4LHlCWsQ9renXhJOvK3CooqEXEIp1fiqjtKSZJKA~c3WQqRmA__"
-    return (
+     return (
         <LinearGradient colors={['#FDF0F3', '#FFFBFC']} style={styles.productDetailsContainer}>
             <View style={styles.headerContainer}>
                 <Header />
             </View>
-            <Image source={{ uri: imgUrl }} style={styles.productDetailsImg} />
-            <View style={styles.productDetails}>
-                <Text style={styles.productTitle}>Winter Coat</Text>
-                <Text style={styles.productPrice}>$65.9</Text>
+            <View style={styles.imageContainer}>
+            <Image source={{ uri: product.image }} style={styles.productDetailsImg} />
+            
+            </View>
+           <View style={styles.productDetails}>
+                <Text style={styles.productTitle}>{product.title}</Text>
+                <Text style={styles.productPrice}>${product.price}</Text>
             </View>
             <View style={styles.sizeContainer}>
                 <Text style={styles.productTitle}>Size</Text>
@@ -51,10 +70,10 @@ const ProductDetails = () => {
                     })}
                 </View>
             </View>
-            <View style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={handleAddToCart}>
                 <Text style={styles.btnText}>Add to Cart</Text>
 
-            </View>
+            </TouchableOpacity>
 
 
         </LinearGradient >
@@ -69,11 +88,18 @@ const styles = StyleSheet.create({
     },
     headerContainer: {
         padding: 20,
-    },
-    productDetailsImg: {
-        width: '100%',
-        height: 420,
+    },imageContainer:{
+        justifyContent:"center",
+        alignItems:"center"
 
+    },
+   
+    productDetailsImg: {
+        width: '80%',
+        height: 420,
+        borderRadius:20,
+        resizeMode:"contain"
+       
     },
     productDetails: {
         flexDirection: "row",
